@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xolboboy avlodlari — oila daraxti</title>
+<style>
+:root{--bg:#1d1510;--card:#2a1e16;--line:#5a4331;--fg:#f0e4d0;--mut:#a8957d;--acc:#d9a45f;--br:#9b6a3c;--leaf:#7fb069;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 "Iowan Old Style",Georgia,serif;padding:24px 0 60px}
+.hd{padding:0 16px;max-width:760px}
+h1{font-size:1.9rem;margin:0 0 4px;font-weight:600}
+.sub{color:var(--mut);margin:0 0 16px}
+.bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.bar button{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer}
+.bar button:hover{border-color:var(--acc)}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#scroll{overflow-x:auto;padding:0 16px 10px}
+#cv{position:relative}
+#cv svg{position:absolute;left:0;top:0}
+.n{position:absolute;display:flex;align-items:center;gap:7px;width:128px;height:42px;padding:0 8px;background:var(--card);border:1px solid var(--line);border-radius:10px;color:var(--fg);font:inherit;text-align:left}
+.n.has{cursor:pointer}
+.n.has:hover{border-color:var(--acc)}
+.n.lf{border-color:#3f5a3a}
+.av{flex:none;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#2a1e16;display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.lf .av{background:var(--leaf);border-radius:50% 0 50% 0}
+.t{min-width:0;line-height:1.15}
+.nm{display:block;font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yr{font-size:.72rem;color:var(--acc)}
+#notes{padding:18px 16px 0;max-width:760px;color:var(--mut);font-size:.88rem}
+#notes p{margin:2px 0}
+</style>
+</head>
+<body>
+<div class="hd">
+  <h1>Xolboboy avlodlari</h1>
+  <p class="sub" id="stats"></p>
+  <div class="bar">
+    <button id="bOpen">Hammasini ochish</button>
+    <button id="bClose">Hammasini yig‘ish</button>
+  </div>
+</div>
+<div id="scroll"><div id="cv"></div></div>
+<div id="notes"></div>
+<script>
+// Yangi odam qo'shish: P("Ism", tug'ilgan_yil, [farzandlar], "izoh")
+// Farzandlari bo'lmasa [] yozmasangiz ham bo'ladi: P("Ism", 1990)
+// Vafot etgan bo'lsa 5-qiymat: P("Ism", 1210, [..], "", 1300)
+const P = (name, born, kids = [], note = "", died = null) => ({ name, born, kids, note, died });
+
+const FAMILY = P("Xolboboy", 1210, [
+  P("Dursun", 1845, [
+    P("Oysha", 1870),
+    P("Husayin", 1875),
+    P("Meryam", 1880),
+    P("Tesha", 1886),
+  ]),
+  P("Bõri", 1847, [], "Farzandlari haqida ma’lumot topilmadi"),
+  P("Sobir", 1850, [
+    P("Nortoji", 1938, [], "Farzandlari haqida ma’lumot topilmadi"),
+    P("Shodi", 1941, [
+      P("Xalim", 1960, [
+        P("Gulnoz", 1980),
+        P("Ziyadulla", 1982),
+        P("Rano", 1983),
+        P("Ilxom", 1985),
+        P("Ikrom", 1986),
+        P("Akrom", 1988),
+      ]),
+      P("Jõra", 1965, [
+        P("Sabo", 1990),
+        P("Feruza", 1992),
+        P("G'ulom", 1988),
+        P("Oxun", 1998),
+      ]),
+      P("Tõra", 1967, [
+        P("Akmal", 1986),
+        P("Anvar", 1988),
+      ]),
+      P("Chori", 1968, [
+        P("Shokir", 1980),
+        P("Motabar", 1983),
+        P("Zokir", 1985),
+        P("Zarif", 1986),
+        P("Sharif", 1987),
+        P("G'opir", 1988),
+        P("Farrux", 1997),
+      ]),
+      P("Ashur", 1970, [
+        P("Akbar", 1992),
+        P("Abror", 1994),
+        P("Dilshod", 1997),
+        P("Umida", 2003),
+        P("Gulsanam", 2008),
+      ]),
+      P("Qurbongul", 1972, [
+        P("Nigora", 1992),
+        P("Umida", 1998),
+        P("Parvina", 2005),
+        P("Azizbek", 2007),
+      ]),
+    ], "6 ta farzandi"),
+    P("Oyimxol", 1945, [
+      P("Xalma", 1970),
+      P("Nappi", 1972),
+      P("Oytugan", 1975),
+      P("Nargiz", 1980),
+    ]),
+    P("Muxtor", 1950),
+    P("Oynisa", 1980),
+    P("Botir", 1987),
+  ], "10 ta farzandidan 6 tasi topilgan"),
+  P("Oytugan", 1855),
+  P("Muxtor", 1860),
+  P("Maysara", 1870),
+], "6 ta farzandi bo‘lgan", 1300);
+
+</script>
+<script>
+(function () {
+try {
+const W = 128, H = 42, COL = 176, ROW = 48, PAD = 6, TR = 44;
+const cv = document.getElementById("cv");
+const count = p => 1 + p.kids.reduce((s, k) => s + count(k), 0);
+const each = (p, f) => { f(p); p.kids.forEach(k => each(k, f)); };
+each(FAMILY, p => p.kids.sort((a, b) => a.born - b.born));
+
+let row, maxD, vis;
+function lay(p, d) {
+  p._d = d; maxD = Math.max(maxD, d); vis.push(p);
+  if (!p.kids.length || p._c) { p._y = row++; return; }
+  p.kids.forEach(k => lay(k, d + 1));
+  p._y = (p.kids[0]._y + p.kids[p.kids.length - 1]._y) / 2;
+}
+
+function draw() {
+  row = 0; maxD = 0; vis = [];
+  lay(FAMILY, 0);
+  const w = TR + maxD * COL + W + 8, h = row * ROW + PAD * 2;
+  const X = d => TR + d * COL, Y = y => PAD + y * ROW + H / 2;
+  let svg = `<path d="M0 ${Y(FAMILY._y)}H${X(0)}" stroke-width="12"/>`;
+  vis.forEach(p => {
+    if (p.kids.length && !p._c) p.kids.forEach(k => {
+      const x1 = X(p._d) + W, y1 = Y(p._y), x2 = X(k._d), y2 = Y(k._y), m = (x1 + x2) / 2;
+      svg += `<path d="M${x1} ${y1}C${m} ${y1} ${m} ${y2} ${x2} ${y2}" stroke-width="${Math.max(1.6, 7 - 1.5 * k._d)}"/>`;
+    });
+  });
+  const nodes = vis.map(p => {
+    const yrs = p.born + (p.died ? "–" + p.died : "") + (p._c ? " ▸" + (count(p) - 1) : "");
+    return `<button class="n ${p.kids.length ? "has" : "lf"}" style="left:${X(p._d)}px;top:${Y(p._y) - H / 2}px">
+      <span class="av">${p.name[0]}</span><span class="t"><span class="nm">${p.name}</span><span class="yr">${yrs}</span></span></button>`;
+  }).join("");
+  cv.style.width = w + "px"; cv.style.height = h + "px";
+  cv.innerHTML = `<svg width="${w}" height="${h}" fill="none" stroke="var(--br)" stroke-linecap="round">${svg}</svg>` + nodes;
+  cv.querySelectorAll(".n").forEach((el, i) => {
+    const p = vis[i];
+    if (p.kids.length) el.onclick = () => { p._c = !p._c; draw(); };
+  });
+}
+
+document.getElementById("stats").textContent = "Jami " + count(FAMILY) + " kishi. Shoxni bosib, uning avlodlarini yig‘ing yoki oching.";
+document.getElementById("bOpen").onclick = () => { each(FAMILY, p => p._c = false); draw(); };
+document.getElementById("bClose").onclick = () => { each(FAMILY, p => p._c = p !== FAMILY); draw(); };
+let nt = "";
+each(FAMILY, p => { if (p.note) nt += `<p>${p.name}: ${p.note}</p>`; });
+document.getElementById("notes").innerHTML = nt;
+draw();
+} catch (e) {
+  const s = document.getElementById("stats");
+  s.textContent = "Xato: " + (e && e.message ? e.message : e);
+  s.style.color = "#e07a5f";
+}
+})();
+</script>
+</body>
+</html>
